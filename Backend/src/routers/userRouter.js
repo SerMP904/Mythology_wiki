@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const {
+    insertNewUser
+} = require("../controllers/userController")
 
-} = require("")
+const { verifyToken } = require("../middlewares/auth")
 
-const {} = require("")
+router.get("/newUser", verifyToken, insertNewUser);
 
 module.exports = router;
