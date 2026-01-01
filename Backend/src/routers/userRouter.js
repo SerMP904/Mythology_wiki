@@ -7,6 +7,6 @@ const {
 
 const { verifyToken } = require("../middlewares/auth")
 
-router.get("/", verifyToken, insertNewUser);
+router.get("/", verifyToken, getAllUsers);
 
 module.exports = router;

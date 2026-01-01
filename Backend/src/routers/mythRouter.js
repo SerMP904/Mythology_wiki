@@ -5,6 +5,6 @@ const {
     insertNewPantheon
 } = require("../controllers/mythController")
 
-router.get("/newPantheon", insertNewPantheon);
+router.post("/newPantheon", insertNewPantheon);
 
 module.exports = router;

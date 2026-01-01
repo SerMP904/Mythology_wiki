@@ -22,14 +22,13 @@ const userSchema = new Schema ({
     password:{
         type: String,
         required: [true, "La contraseña es obligatoria"],
-        unique: [true, "El email introducido ya existe"],
     },
     profilePicture:{
         type: String,
     },
     role:{
         type: String,
-        enum: [user, admin],
+        enum: ["user", "admin"],
         default: "user",
     },
     isActive:{
