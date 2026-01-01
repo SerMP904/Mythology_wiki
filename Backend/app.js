@@ -1,6 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const userRouter = require("./src/routers/userRouter")
+const mythRouter = require("./src/routers/mythRouter")
+const authRouter = require("./src/routers/authRouter")
 
 const connectToDatabase = require("./src/db/database")
 
@@ -18,6 +21,10 @@ app.use(
     })
 );
 
+app.use("/api/users", userRouter);
+app.use("/api/myths", mythRouter);
+app.use("/api/auth", authRouter);
+
 app.listen(PORT, () => {
-    res.status(200).json("Connected to database");
+    
 })

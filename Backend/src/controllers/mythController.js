@@ -1,4 +1,4 @@
-const userModel = require("../models/mythModel");
+const mythModel = require("../models/mythModel");
 
 const insertNewPantheon = async (req, res) => {
   try {
@@ -6,7 +6,7 @@ const insertNewPantheon = async (req, res) => {
     if (!pantheon || !majorGods || !otherGods) {
       return res
         .status(400)
-        .send({ status: "Failed", message: "Falta información requeridad" });
+        .send({ status: "Failed", message: "Falta información requerida" });
     }
 
     const newPantheon = {
