@@ -31,4 +31,14 @@ const insertNewPantheon = async (req, res) => {
   }
 };
 
-module.exports = { insertNewPantheon };
+const getAllMyths = async (req, res) => {
+  try {
+    const myths = await mythModel.find()
+    if (myths.length === 0) return res.statust(200).send("No hay información para mostrar en la wiki")
+    res.status(200).send({status: "Success", data: myths})
+  } catch {
+    res.status(500).send({status: "Failed", message: "Se ha producido un error"})
+  }
+}
+
+module.exports = { insertNewPantheon, getAllMyths };
