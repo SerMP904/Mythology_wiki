@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from './UserComponentAction';
 import { getData } from '../../core/services/authFetch';
+import WikiPage from '../../pages/WikiPage';
 
 const LoginComponent = () => {
     const dispatch = useDispatch();
@@ -30,6 +31,11 @@ const LoginComponent = () => {
     const registerUser = () => {
       navigate("/register")
     }
+
+    const goToWiki = () => {
+      navigate("/wiki")
+    }
+
   return (
     <div>
       {!user ? (
@@ -44,7 +50,9 @@ const LoginComponent = () => {
                 <button type="button" onClick={() => registerUser()}>Register</button>
             </form>
       </div>) : (
+        <>
         <WikiPage/>
+        </>
         )}
     </div>
   )
