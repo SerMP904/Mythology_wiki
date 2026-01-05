@@ -40,3 +40,33 @@
 .read-the-docs {
   color: #888;
 }
+
+.total-myth-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 equal-width columns */
+  gap: 20px; /* Gap between grid items */
+  padding: 20px 0;
+  justify-items: center; /* Center items horizontally */
+}
+
+.pantheon-display {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.symbols-display {
+  margin-left: 20px;
+  font-style: italic;
+}
+
+.other-gods-display {
+  background: #eef7f4;
+  padding: 10px;
+  border-left: 4px solid #009688;
+  margin-bottom: 15px;
+}

@@ -7,13 +7,14 @@ const mythSchema = new Schema({
     required: true,
     unique: true,
   },
-  majorGods: [
+  majorGod:
     {
       name: {
         type: String,
         required: true,
       },
       symbols: [String],
+      
       description: {
         type: String,
       },
@@ -21,7 +22,6 @@ const mythSchema = new Schema({
         type: String,
       }
     },
-  ],
   otherGods: [
     {
       name: {

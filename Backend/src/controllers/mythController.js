@@ -2,8 +2,8 @@ const mythModel = require("../models/mythModel");
 
 const insertNewPantheon = async (req, res) => {
   try {
-    const { pantheon, majorGods, otherGods } = req.body;
-    if (!pantheon || !majorGods || !otherGods) {
+    const { pantheon, majorGod, otherGods } = req.body;
+    if (!pantheon || !majorGod || !otherGods) {
       return res
         .status(400)
         .send({ status: "Failed", message: "Falta información requerida" });
@@ -11,7 +11,7 @@ const insertNewPantheon = async (req, res) => {
 
     const newPantheon = {
       pantheon,
-      majorGods,
+      majorGod,
       otherGods,
     };
     const createPantheon = await mythModel.create(newPantheon);
