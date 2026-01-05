@@ -22,3 +22,27 @@ export async function getData(email, password) {
     }
 }
 
+export async function createNewUser(name, username, email, password){
+  try {
+    const url = "http://localhost:3000/api/auth/signup";
+        const options = {
+            method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        username: username,
+        email: email,
+        password: password,
+        })
+        }
+        const res = await fetch(url, options);
+        if (!res.ok) throw new Error("Fallo al realizar la petición");
+        const response = await res.json();
+        return response;
+  } catch (error) {
+     console.log(error)
+        return null
+  }
+}

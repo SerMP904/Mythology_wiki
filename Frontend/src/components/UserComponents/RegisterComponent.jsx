@@ -2,18 +2,27 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { register } from './UserComponentAction';
 import { useNavigate } from "react-router-dom";
+import { createNewUser } from "../../core/services/authFetch";
 
 const RegisterComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const registerUserSubmit= () => {
-    dispatch(register([name, username, email, password]));
+  const registerUserSubmit = async(e) => {
+    e.preventDefault();
+    const userData = await createNewUser(name, username, email, password)
+    if (userData) {
+    dispatch(register(userData));
     navigate("/wiki")
+    }
+    else {
+      console.log("no se ha podido registrar el usuario")
+    }
   }
 
   const goBack = () => {
@@ -22,7 +31,7 @@ const RegisterComponent = () => {
 
   return (
     <div>
-      <form>
+      <form onSubmit={registerUserSubmit}>
         <label>Introduce nombre</label>
         <input
           type="text"
@@ -48,8 +57,8 @@ const RegisterComponent = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button onClick={() => registerUserSubmit()}>Terminar</button>
-        <button onClick={() => goBack()}>back</button>
+        <button type="submit">Registrarse</button>
+        <button type="button" onClick={() => goBack()}>Volver</button>
       </form>
     </div>
   );
