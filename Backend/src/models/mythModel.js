@@ -7,6 +7,9 @@ const mythSchema = new Schema({
     required: true,
     unique: true,
   },
+  overview: {
+    type: String,
+  },
   majorGod:
     {
       name: {
@@ -38,10 +41,18 @@ const mythSchema = new Schema({
     },
   ],
   manuscript: {
-    type: String,
+    name: {
+      type: String}, 
+    description: {
+      type: String,
+      } 
   },
   tales: {
-    type: String,
+    name: {
+      type: String},
+    description: {
+      type: String,
+      } 
   },
   monsters: [{
     name: {

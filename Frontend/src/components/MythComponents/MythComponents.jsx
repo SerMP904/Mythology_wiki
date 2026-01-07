@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllMyths } from "../../core/services/mythFetch";
 import { loadMythAction } from "./MythComponentAction";
+import { useNavigate } from "react-router-dom";
 
 const MythComponents = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { myths, mythsSelected } = useSelector(
     (state) => state.mythComponentReducer
   );
@@ -12,6 +14,12 @@ const MythComponents = () => {
     const auxData = await getAllMyths();
     dispatch(loadMythAction(auxData));
   };
+
+
+  const pantheonClick = (pantheon) => {
+      console.log(pantheon)
+      navigate(`${pantheon}`)
+    }
 
   useEffect(() => {
     loadMyths();
@@ -27,7 +35,7 @@ const MythComponents = () => {
         <div className="total-myth-grid">
           {myths.map((m, idx) => {
             return (
-              <div key={idx} className="pantheon-display">
+              <div key={idx} className="pantheon-display" onClick={() => pantheonClick(m.pantheon)}>
                 <div>
                   <p>Panteón: {m.pantheon}</p>
                 </div>
@@ -78,7 +86,7 @@ const MythComponents = () => {
                       )
                     })}
                     <div>
-                      <p>Manuscrito principal: {m.manuscript}</p>
+                      <p>Manuscrito principal: {m.manuscript.name}</p>
                     </div>
                     <div>
                       {m.monsters.length > 0 && (
@@ -87,7 +95,7 @@ const MythComponents = () => {
                         {m.monsters.map((monster, monsterIdx) => {
                           return (
                             <div key={monsterIdx}>
-                              <p>{monster.name}: {monster.description}</p>
+                              <p>{monster.name}</p>
                             </div>
                           )
                         })}
