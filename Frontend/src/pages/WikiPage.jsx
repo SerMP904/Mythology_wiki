@@ -1,9 +1,13 @@
-import MythComponents from "../components/MythComponents/MythComponents";
+import FooterComponent from "../components/footerComponent/FooterComponent";
+import HeaderComponent from "../components/headerComponent/headerComponent";
+import { Outlet } from "react-router-dom";
 
 const WikiPage = () => {
   return (
      <>
-      <MythComponents/>
+      <HeaderComponent />
+      <Outlet />
+      <FooterComponent/>
     </>
   )
 }
