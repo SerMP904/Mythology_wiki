@@ -1,46 +1,3 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
 .total-myth-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 equal-width columns */
@@ -96,4 +53,99 @@
 .footer-div {
   cursor: pointer;
   padding: 15px;
+}
+
+.login-main {
+  background-color: #f4f4f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-form-question {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.login-form-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0px;
+}
+
+.login-button {
+  padding: 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: antiquewhite;
+  margin: 20px;
+  margin-top: 0px;
+}
+
+.login-form-label {
+  padding-right: 5px;
+}
+
+.register-main {
+  background-color: #b49a9a;
+  display: flex;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #dfd6d6;
+  padding: 20px;
+  border: 2px solid #007bff;
+}
+
+.register-form-question {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-form-label {
+  font-size: 14px;
+  color: #333333;
+  margin-bottom: 5px;
+}
+
+.register-form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.register-button {
+  padding: 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
 }

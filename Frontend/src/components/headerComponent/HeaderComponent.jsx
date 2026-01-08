@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const HeaderComponent = () => {
     const navigate = useNavigate()
+    const { myths } = useSelector((state) => state.mythComponentReducer);
 
     const returnHome = () => {
         navigate("/wiki")

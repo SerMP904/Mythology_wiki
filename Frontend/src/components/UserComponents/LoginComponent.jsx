@@ -32,22 +32,23 @@ const LoginComponent = () => {
       navigate("/register")
     }
 
-    const goToWiki = () => {
-      navigate("/wiki")
-    }
-
   return (
     <div>
       {!user ? (
-        <div>
-            <form onSubmit={loginUser}>
-                <label>Introduce email</label>
+        <div className="login-main">
+            <form onSubmit={loginUser} className="login-form">
+              <div className="login-form-question">
+                <label className="login-form-label">Introduce email:</label>
                 <input type="text" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                <hr />
-                <label>Introduce contraseña</label>
+              </div>
+              <div className="login-form-question">
+                <label className="login-form-label">Introduce contraseña:</label>
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                <button type="submit">Login</button>
-                <button type="button" onClick={() => registerUser()}>Register</button>
+              </div>
+              <div className="login-form-buttons">
+                <button type="submit" className="login-button">Login</button>
+                <button type="button" className="login-button" onClick={() => registerUser()}>Register</button>
+              </div>
             </form>
       </div>) : (
         <>

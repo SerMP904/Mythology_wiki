@@ -30,35 +30,44 @@ const RegisterComponent = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={registerUserSubmit}>
-        <label>Introduce nombre</label>
+    <div className="register-main">
+      <form onSubmit={registerUserSubmit} className="register-form">
+        <div className="register-form-question">
+        <label className="register-form-label">Introduce nombre</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-         <label>Introduce nombre de usuario</label>
+        </div>
+        <div className="register-form-question">
+         <label className="register-form-label">Introduce nombre de usuario</label>
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <label>Introduce email</label>
+        </div>
+        <div className="register-form-question">
+        <label className="register-form-label">Introduce email</label>
         <input
           type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <hr />
-        <label>Introduce contraseña</label>
+        </div>
+        <div className="register-form-question">
+        <label className="register-form-label">Introduce contraseña</label>
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Registrarse</button>
-        <button type="button" onClick={() => goBack()}>Volver</button>
+        </div>
+        <div className="register-form-buttons"> 
+        <button className="register-button" type="submit">Registrarse</button>
+        <button className="register-button" type="button" onClick={() => goBack()}>Volver</button>
+        </div>
       </form>
     </div>
   );
