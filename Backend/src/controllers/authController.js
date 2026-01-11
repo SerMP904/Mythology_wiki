@@ -79,4 +79,20 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { signup, login };
+const getTokens = (req, res) => {
+  try {
+    const payload = {
+      _id: req.payload._id,
+      name: req.payload.name,
+      role: req.payload.role
+    }
+
+    const token = generateToken(payload, false)
+   
+    res.status(200).send({status: "Success", token})
+  } catch (error) {
+    res.status(500).send({ status: "Failed", error: error.message });
+  }
+}
+
+module.exports = { signup, login, getTokens };
