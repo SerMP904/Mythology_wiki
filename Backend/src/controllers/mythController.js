@@ -2,14 +2,14 @@ const mythModel = require("../models/mythModel");
 
 const insertNewPantheon = async (req, res) => {
   try {
-    const { pantheon, majorGod, otherGods, manuscript, tales, monsters } = req.body;
+    const { pantheon, majorGod, overview, otherGods, manuscript, tales, monsters } = req.body;
     if (!pantheon || !majorGod || !otherGods) {
       return res
         .status(400)
         .send({ status: "Failed", message: "Falta información requerida" });
     }
 
-    const newPantheon = {
+    const newPantheon = new mythModel({
       pantheon,
       overview,
       majorGod,
@@ -17,8 +17,10 @@ const insertNewPantheon = async (req, res) => {
       manuscript,
       tales,
       monsters,
-    };
-    
+    });
+
+    await newPantheon.save();
+
     if (!pantheon) {
       return res
         .status(400)
@@ -50,7 +52,6 @@ const getMythsByPantheon = async (req, res) => {
   try {
     const myths = await mythModel.find({pantheon});
     if (myths.length === 0) return res.statust(200).send("No hay información para mostrar en la wiki")
-    res.status(200).send({status: "Success", data: myths})
     res.status(200).send({status: "Success", data: myths})
   } catch (error) {
     res.status(500).send({status: "Failed", message: "Se ha producido un error"})
