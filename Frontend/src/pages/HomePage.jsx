@@ -1,11 +1,11 @@
 import MythComponents from "../components/MythComponents/MythComponents";
-import UserComponent from "../components/UserComponents/UserComponent";
+import LoginComponent from "../components/UserComponents/LoginComponent";
 
 
 const HomePage = () => {
   return (
     <>
-      <UserComponent/>
+      <LoginComponent/>
     </>
   );
 };

@@ -6,7 +6,9 @@ const WikiPage = () => {
   return (
      <>
       <HeaderComponent />
+      <div className="outlet-min-height">
       <Outlet />
+      </div>
       <FooterComponent/>
     </>
   )

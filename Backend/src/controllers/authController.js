@@ -62,7 +62,8 @@ const login = async (req, res) => {
       username: user.username,
       email: user.email,
       password: user.password,
-      _id: user._id
+      _id: user._id,
+      role: user.role
     };
 
     const payload = {
@@ -80,4 +81,15 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { signup, login};
+const loginWithToken = async (req, res) => {
+  try {
+    const idUser = req.payload
+    const user = await userModel.findId(idUser)
+    if (!user) return res.status(401).send({status: "Failed", message: "no hay usuario"})
+    res.status(200).send({status: "Success", data: user})
+  } catch (error) {
+    res.status(500).send({ status: "Failed", error: error.message });
+  }
+}
+
+module.exports = { signup, login, loginWithToken};
