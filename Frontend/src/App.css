@@ -1,15 +1,28 @@
+@import "./components/InfoComponents/AboutUs.css";
+@import "./components/InfoComponents/Contact.css";
+@import "./components/InfoComponents/LearnMore.css";
+@import "./components/InfoComponents/SuggestionBox.css";
+@import "./components//headerComponent/HeaderComponent.css";
+
+
+
+.outlet-min-height {
+  min-height: 85vh;
+}
+
 .total-myth-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 equal-width columns */
-  gap: 20px; /* Gap between grid items */
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 20px; 
   padding: 20px 0;
-  justify-items: center; /* Center items horizontally */
+  justify-items: center;
+  background-color: #c2fcf6;
 }
 
 .pantheon-display {
   display: flex;
   flex-direction: column;
-  background: white;
+  background-color: rgb(225, 238, 221);
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 8px;
@@ -17,29 +30,83 @@
   cursor: pointer;
 }
 
+.pantheon-major-god {
+  border: 2px solid #385748;
+  padding: 5px;
+  background-color: #7ff0e6;
+}
+
+.pantheon-name {
+  font-size: 1rem;
+  font: bold;
+  text-transform: uppercase;
+  align-items: center;
+  text-align: center;
+}
+
 .symbols-display {
-  margin-left: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 5px;
   font-style: italic;
+  align-items: stretch;
+  justify-items: stretch;
+  padding: 5px;
 }
 
-.other-gods-display {
-  background: #eef7f4;
-  padding: 10px;
-  border-left: 4px solid #009688;
-  margin-bottom: 15px;
-}
-
-.header-main {
+.symbols-display-individual {
+  border: 2px solid #0b110e;
+  background-color: #03d4bf;
+  gap: 5px;
+  padding: 15px;
+  margin: 5px;
   display: flex;
-  flex-direction: row;
-  background-color: grey;
   align-items: center;
   justify-content: center;
 }
 
-.header-div {
-  cursor: pointer;
-  padding: 15px;
+.other-gods-display {
+  background-color: #b7f1de;
+  padding: 10px;
+  border-left: 4px solid #009688;
+  margin-bottom: 15px;
+  border: 2px solid #385748;
+}
+
+.manuscript-div {
+  border: 2px solid #616840;
+  text-align: center;
+  margin: 10px;
+  background-color: #a4c6eb;
+}
+
+.manuscript-name {
+  font-style: italic;
+}
+
+.monsters-div{
+  border: 2px solid #2d311c;
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: #ebcca4;
+}
+
+.monsters-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  
+}
+
+.monsters-cell {
+  text-align: center;
+  border: 1px solid #663838;
+  background-color: rgb(247, 162, 162);
+}
+
+.pantheon-tales-div{
+  border: 2px solid #411a1a;
+  padding: 5px;
+  background-color: #f7c9c9;
 }
 
 .footer-main {
@@ -48,6 +115,10 @@
   background-color: grey;
   align-items: center;
   justify-content: center;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin-top: auto;
 }
 
 .footer-div {
@@ -68,6 +139,9 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 200rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-form-question {
@@ -78,6 +152,7 @@
   width: 100%;
   max-width: 400px;
   box-sizing: border-box;
+  font-size: 36px;
 }
 
 .login-form-buttons {
@@ -88,8 +163,8 @@
 }
 
 .login-button {
-  padding: 12px;
-  font-size: 14px;
+  padding: 20px;
+  font-size: 30px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -100,6 +175,12 @@
 
 .login-form-label {
   padding-right: 5px;
+}
+
+.login-form-input {
+  width: 20rem;
+  height: 2rem;
+  font-size: 24px;
 }
 
 .register-main {
@@ -148,4 +229,23 @@
   border-radius: 6px;
   cursor: pointer;
   text-align: center;
+}
+
+.settings-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.settings-parameter-form {
+  display: flex;
+  flex-direction: row;
+  background-color: #7a7a558e;
+  padding: 15px;
+  justify-content: center;
+}
+
+.settings-element {
+  margin-right: 10px;
 }

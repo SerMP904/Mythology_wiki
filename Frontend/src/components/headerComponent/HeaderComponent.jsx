@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../UserComponents/UserComponentAction";
+
 
 
 const HeaderComponent = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const { myths } = useSelector((state) => state.mythComponentReducer);
     const [selectedPantheon, setSelectedPantheon] = useState('');
-
+    const user = useSelector((state) => state.userComponentReducer.user);
     const returnHome = () => {
         navigate("/wiki")
     }
-
     const handlePantheonChange = (e) => {
     const pantheon = e.target.value;
     setSelectedPantheon(pantheon);
@@ -22,23 +24,49 @@ const HeaderComponent = () => {
       }
     }
 
+    const goToSettings = () => {
+      navigate("user/settings")
+    }
+
+    const goToContact =() => {
+      navigate("wiki/contact")
+    }
+
+    const logoutUser = async () => {
+        dispatch(logout());
+        navigate("/login")
+      };
+    
+    const userManagement = () => {
+      navigate("/userManagement")
+    }
+
   return (
     <div className="header-main">
       <div className="header-div" onClick={() => returnHome()}>
         <p>Home</p>
       </div>
-      <div className="header-div">
+      <div className="header-div" onClick={() => goToContact()}>
         <p>Contact</p>
       </div>
       <div className="header-div">
         <select value={selectedPantheon} onChange={handlePantheonChange}>
           <option value="">Ninguno</option>
           {myths.map((myth, index) => (
-            <option key={index} value={myth.pantheon}>
+            <option key={index} value={myth.pantheon} className="pantheon-select-options">
               {myth.pantheon}
             </option>
           ))}
           </select>
+      </div>
+      <div className="header-div" onClick={() => goToSettings()}>
+        <p>Configuración</p>
+      </div>
+      {user.data.role === "admin" ? (<div className="header-div">
+        <button onClick={userManagement}>Control de usuarios</button>
+      </div>) : null}
+      <div className="header-div">
+        <button className="logout-button" onClick={() => logoutUser()}>Logout</button>
       </div>
     </div>
   )

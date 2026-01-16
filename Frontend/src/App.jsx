@@ -8,6 +8,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PantheonComponent from './components/MythComponents/PantheonComponent';
 import MythComponents from './components/MythComponents/MythComponents';
 import WikiPage from './pages/WikiPage';
+import SettingsComponent from './components/UserComponents/SettingsComponent';
+import AboutUsComponent from './components/InfoComponents/AboutUsComponent';
+import ContactComponent from './components/InfoComponents/ContactComponent';
+import LearnMoreComponent from './components/InfoComponents/LearnMoreComponent';
+import SuggestionBoxComponent from './components/InfoComponents/SuggestionBoxComponent';
+import UserManagement from './components/AdminComponent/UserManagement';
 
 function App() {
 
@@ -20,7 +26,13 @@ function App() {
           <Route path="/register" element={<RegisterComponent/>}/>
 
           <Route element={<WikiPage/>}>
+            <Route path="/user/settings" element={<SettingsComponent/>}/>
             <Route path="/wiki/:pantheon" element={<PantheonComponent/>}/>
+            <Route path="/wiki/aboutUs" element={<AboutUsComponent/>}/>
+            <Route path="/wiki/contact" element={<ContactComponent/>}/>
+            <Route path="/wiki/learnMore" element={<LearnMoreComponent/>}/>
+            <Route path="/wiki/suggestionBox" element={<SuggestionBoxComponent/>}/>
+            <Route path="/userManagement" element={<UserManagement/>}/>
             <Route path="/wiki" element={<MythComponents/>}/>
           </Route>
         </Routes>  

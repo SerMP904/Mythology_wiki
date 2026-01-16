@@ -28,9 +28,20 @@ const signup = async (req, res) => {
         message: "No se ha podido crear el usuario",
       });
     }
+
+     const payload = {
+      _id: user._id,
+      name: user.name,
+      role: user.role,
+    };
+
+    const token = generateToken(payload, false);
+    const token_refresh = generateToken(payload, true);
+
     res.status(200).send({
       status: "Success",
       message: "El usuario se ha creado correctamente",
+      data: newUser, token, token_refresh
     });
   } catch (error) {
     res.status(500).send({ status: "Failed", error: error.message });
