@@ -36,21 +36,23 @@ const MythComponents = () => {
           {myths.map((m, idx) => {
             return (
               <div key={idx} className="pantheon-display" onClick={() => pantheonClick(m.pantheon)}>
-                <div>
-                  <p>Panteón: {m.pantheon}</p>
+                <div className="pantheon-name">
+                  <p>{m.pantheon}</p>
                 </div>
-                <div>
+                <div className="pantheon-major-god">
                   <p>Dios Mayor: {m.majorGod.name}</p>
                   {m.majorGod.symbols.length > 0 && (
                     <>
                     <p>Símbolos: </p>
+                    <div className="symbols-display">
                     {m.majorGod.symbols.map((s, majorIdx) => {
                       return (
-                        <div key={majorIdx} className="symbols-display">
-                          <p> {s} {idx < m.majorGod.symbols.length - 1 && ", "} </p>
+                        <div key={majorIdx} className="symbols-display-individual">
+                          <p>{s}</p>
                         </div>
                       );
                     })}
+                    </div>
                     </>
                     )}
                   <div>
@@ -64,41 +66,42 @@ const MythComponents = () => {
                     {m.otherGods.map((god, idx) => {
                       return (
                         <div key={idx} className="other-gods-display">
+                          <div>
                           <p>{god.name}: </p>
+                          </div>
                           {god.symbols.length > 0 && (
                             <>
-                            <div>
                             <p>Simbolos:</p>
+                            <div className="symbols-display">
                             {god.symbols.map((s, godIdx) => {
                               return (
-                                <div key={godIdx}>
-                                  <p>{s} {godIdx < god.symbols.length - 1 && ", "}</p>
+                                <div key={godIdx} className="symbols-display-individual">
+                                  <p>{s}</p>
                                 </div>
                               )
                             })}
                             </div>
                             </>
                           )}
-                          <div>
-                            <p>{god.description} </p>
-                          </div>
                         </div>
                       )
                     })}
-                    <div>
-                      <p>Manuscrito principal: {m.manuscript.name}</p>
+                    <div className="manuscript-div">
+                      <p>Manuscrito principal: <span className="manuscript-name">{m.manuscript.name}</span></p>
                     </div>
-                    <div>
+                    <div className="monsters-div">
                       {m.monsters.length > 0 && (
                         <>
                         <p>Monstruos: </p>
+                        <div className="monsters-grid">
                         {m.monsters.map((monster, monsterIdx) => {
                           return (
-                            <div key={monsterIdx}>
+                            <div key={monsterIdx} className="monsters-cell">
                               <p>{monster.name}</p>
                             </div>
                           )
                         })}
+                        </div>
                         </>
                       )}
                     </div>

@@ -1,24 +1,34 @@
-import { USER_LOGIN, USER_REGISTER } from "./UserComponentAction"
+import { USER_LOGIN, USER_LOGOUT, USER_REGISTER, USERS_LOAD } from "./UserComponentAction";
 
 const initialState = {
-    user: undefined
-}
+  user: undefined,
+};
 
 const userComponentReducer = (state = initialState, action) => {
-    switch (action.type){
-        case USER_LOGIN:
-            return {
-                ...state,
-                user: action.payload.userData
-            }
-        case USER_REGISTER:
-            return {
-                ...state,
-                user: action.payload
-            } 
+  switch (action.type) {
+    case USER_LOGIN:
+      return {
+        ...state,
+        user: action.payload.userData,
+      };
+    case USER_REGISTER:
+      return {
+        ...state,
+        user: action.payload.userData,
+      };
+      case USERS_LOAD:
+      return {
+        ...state,
+        users: action.payload.users,
+      };
+    case USER_LOGOUT:
+      return {
+        ...state,
+        user: undefined,
+      };
     default:
-        return state;
-    }
-}
+      return state;
+  }
+};
 
 export default userComponentReducer;

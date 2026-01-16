@@ -17,7 +17,11 @@ const RegisterComponent = () => {
     e.preventDefault();
     const userData = await createNewUser(name, username, email, password)
     if (userData) {
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("token", userData.token);
+    localStorage.setItem("token_refresh", userData.token_refresh);
     dispatch(register(userData));
+    console.log(userData)
     navigate("/wiki")
     }
     else {

@@ -6,7 +6,7 @@ export async function getUsers(){
             method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": token
+        "auth-token": token,
       },
     };
         const res = await fetch(url, options);
@@ -51,13 +51,10 @@ export async function editUser(idUser, newUserData, token){
         "auth-token": token,
       },
       body: JSON.stringify({newUserData}),
-    };  
-    console.log(options.body)
+    };
         const res = await fetch(url, options);
-        console.log(res)
         if (!res.ok) throw new Error("Fallo al realizar la petición");
         const response = await res.json();
-        console.log(response)
         return response;
     } catch (error) {
         console.log(error)
@@ -65,13 +62,14 @@ export async function editUser(idUser, newUserData, token){
     }
 }
 
-export async function deleteUser(idUser){
+export async function deleteUserSelected(idUser, token){
      try {
         const url = `http://localhost:3000/api/user/delete/${idUser}`;
         const options = {
             method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "auth-token": token,
       },
     };  
         
