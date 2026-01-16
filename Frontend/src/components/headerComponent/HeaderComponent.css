@@ -1,0 +1,21 @@
+.header-main {
+  display: flex;
+  flex-direction: row;
+  background-color: grey;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-div {
+  cursor: pointer;
+  padding: 15px;
+}
+
+.pantheon-select-options {
+  text-transform: capitalize;
+}
+
+.logout-button {
+  border-radius: 6px;
+  border: none;
+}

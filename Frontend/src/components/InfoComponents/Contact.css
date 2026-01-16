@@ -1,0 +1,23 @@
+.contact-main-div {
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.contact-tile {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.contact-section {
+  margin-bottom: 1rem;
+}
+
+.contact-subtitle {
+  margin-bottom: 0.3rem;
+  font-size: 1.1rem;
+}
+
+.contacto-info-tex {
+  margin: 0;
+}

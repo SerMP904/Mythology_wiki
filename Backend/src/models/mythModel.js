@@ -47,13 +47,13 @@ const mythSchema = new Schema({
       type: String,
       } 
   },
-  tales: {
+  tales: [{
     name: {
       type: String},
     description: {
       type: String,
       } 
-  },
+  }],
   monsters: [{
     name: {
         type: String,

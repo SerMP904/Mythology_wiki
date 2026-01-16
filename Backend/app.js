@@ -17,11 +17,11 @@ app.use(
     cors({
         origin: "http://localhost:5173",
         methods: ["GET", "POST", "OPTIONS", "PATCH", "PUT", "DELETE"],
-        allowedHeaders: ["Content-Type"],
+        allowedHeaders: ["Content-Type", "auth-token"],
     })
 );
 
-app.use("/api/users", userRouter);
+app.use("/api/user", userRouter);
 app.use("/api/myths", mythRouter);
 app.use("/api/auth", authRouter);
 
