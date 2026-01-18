@@ -28,7 +28,7 @@ const SettingsComponent = () => {
   };
 
   const disableDeleteUser = () => {
-    setIsDeleteUser(true);
+    setIsDeleteUser(false);
   };
 
   const finishEditSettings = () => {
@@ -59,11 +59,11 @@ const SettingsComponent = () => {
   };
 
   return (
-    <div>
+    <div className="settings-standard">
       {user ? (
         editSettings ? (
           <div>
-            <form className="change-settings-form" onSubmit={changeUserData}>
+            <form className="settings-form" onSubmit={changeUserData}>
               <span className="settings-element">Nombre del usuario: </span>
               <input
                 type="text"
@@ -85,17 +85,20 @@ const SettingsComponent = () => {
                 className="settings-element"
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
-              <button type="submit">Terminar y Guardar</button>
+              <div className="settings-buttons-div">
+              <button className="settings-button" type="submit">Terminar y Guardar</button>
+              <button className="settings-button" onClick={finishEditSettings}>Volver Sin Guardar</button>
+              </div>
             </form>
           </div>
         ) : isDeleteUser ? (
-          <div>
-            <div>
+          <div className="settings-form">
+            <div className="settings-element">
               <p>¿Seguro que desea eliminar su cuenta?</p>
             </div>
-            <div>
-              <button onClick={deleteUser}>Eliminar</button>
-              <button onClick={disableDeleteUser}>Cancelar</button>
+            <div className="settings-buttons-div">
+              <button className="settings-button" onClick={deleteUser}>Eliminar</button>
+              <button className="settings-button" onClick={disableDeleteUser}>Cancelar</button>
             </div>
           </div>
         ) : (
@@ -116,8 +119,10 @@ const SettingsComponent = () => {
                 {email || userState.email}
               </span>
             </div>
-            <button onClick={enableEditSettings}>editar</button>
-            <button onClick={enableDeleteUser}>Eliminar</button>
+            <div className="settings-buttons-div">
+            <button className="settings-button" onClick={enableEditSettings}>Editar</button>
+            <button className="settings-button" onClick={enableDeleteUser}>Eliminar</button>
+            </div>
           </div>
         )
       ) : (

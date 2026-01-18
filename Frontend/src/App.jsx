@@ -12,7 +12,6 @@ import SettingsComponent from './components/UserComponents/SettingsComponent';
 import AboutUsComponent from './components/InfoComponents/AboutUsComponent';
 import ContactComponent from './components/InfoComponents/ContactComponent';
 import LearnMoreComponent from './components/InfoComponents/LearnMoreComponent';
-import SuggestionBoxComponent from './components/InfoComponents/SuggestionBoxComponent';
 import UserManagement from './components/AdminComponent/UserManagement';
 
 function App() {
@@ -31,7 +30,6 @@ function App() {
             <Route path="/wiki/aboutUs" element={<AboutUsComponent/>}/>
             <Route path="/wiki/contact" element={<ContactComponent/>}/>
             <Route path="/wiki/learnMore" element={<LearnMoreComponent/>}/>
-            <Route path="/wiki/suggestionBox" element={<SuggestionBoxComponent/>}/>
             <Route path="/userManagement" element={<UserManagement/>}/>
             <Route path="/wiki" element={<MythComponents/>}/>
           </Route>

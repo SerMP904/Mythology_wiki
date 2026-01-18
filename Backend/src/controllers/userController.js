@@ -16,7 +16,6 @@ const getAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const { idUser } = req.params;
-    console.log(idUser);
     const user = await userModel.findById(idUser);
     if (!user) return res.status(200).send("No existe usuario con ese id");
     res.status(200).send({ status: "Success", data: user });
@@ -56,7 +55,6 @@ const editUserById = async (req, res) => {
       new: true,
       runValidators: true,
     });
-    console.log(updatedUser)
     if (!updatedUser)
       return res.status(500).send("No existe usuario con ese id");
     res.status(200).send({ status: "Success", data: updatedUser });

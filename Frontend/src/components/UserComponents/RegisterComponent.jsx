@@ -35,6 +35,9 @@ const RegisterComponent = () => {
 
   return (
     <div className="register-main">
+      <div className="register-img-container">
+      <img src="../../../public/pilar.png" alt="pillar" className="register-img"/>
+      </div>
       <form onSubmit={registerUserSubmit} className="register-form">
         <div className="register-form-question">
         <label className="register-form-label">Introduce nombre</label>
@@ -73,6 +76,9 @@ const RegisterComponent = () => {
         <button className="register-button" type="button" onClick={() => goBack()}>Volver</button>
         </div>
       </form>
+      <div className="register-img-container">
+      <img src="../../../public/pilar.png" alt="pillar" className="register-img"/>
+      </div>
     </div>
   );
 };

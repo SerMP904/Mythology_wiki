@@ -10,6 +10,9 @@ const mythSchema = new Schema({
   overview: {
     type: String,
   },
+  representation: {
+    type: String,
+  },
   majorGod:
     {
       name: {

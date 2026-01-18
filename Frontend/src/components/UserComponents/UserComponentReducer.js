@@ -2,6 +2,7 @@ import { USER_LOGIN, USER_LOGOUT, USER_REGISTER, USERS_LOAD } from "./UserCompon
 
 const initialState = {
   user: undefined,
+  users: [],
 };
 
 const userComponentReducer = (state = initialState, action) => {
