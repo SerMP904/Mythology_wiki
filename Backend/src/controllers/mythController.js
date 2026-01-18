@@ -2,7 +2,7 @@ const mythModel = require("../models/mythModel");
 
 const insertNewPantheon = async (req, res) => {
   try {
-    const { pantheon, majorGod, overview, otherGods, manuscript, tales, monsters } = req.body;
+    const { pantheon, majorGod, overview, representation, otherGods, manuscript, tales, monsters } = req.body;
     if (!pantheon || !majorGod || !otherGods) {
       return res
         .status(400)
@@ -12,6 +12,7 @@ const insertNewPantheon = async (req, res) => {
     const newPantheon = new mythModel({
       pantheon,
       overview,
+      representation,
       majorGod,
       otherGods,
       manuscript,

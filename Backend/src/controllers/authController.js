@@ -103,4 +103,4 @@ const loginWithToken = async (req, res) => {
   }
 }
 
-module.exports = { signup, login, loginWithToken};
+module.exports = { signup, login, loginWithToken };
