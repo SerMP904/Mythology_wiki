@@ -1,16 +1,14 @@
 .footer-main {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background-color: grey;
   align-items: center;
   justify-content: center;
-  bottom: 0;
-  left: 0;
   width: 100%;
   margin-top: auto;
 }
 
 .footer-div {
   cursor: pointer;
-  padding: 15px;
+  padding: 10px;
 }
