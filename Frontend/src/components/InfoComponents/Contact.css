@@ -1,0 +1,44 @@
+.contact-main-div {
+  width: 90%;
+  margin: 1rem auto;
+  font-family: Arial, sans-serif;
+}
+
+.contact-tile {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.contact-section {
+  margin-bottom: 0.8rem;
+}
+
+.contact-subtitle {
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.contact-info-text {
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .contact-main-div {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact-tile {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  .contact-section {
+    margin-bottom: 1rem;
+  }
+
+  .contact-subtitle {
+    font-size: 1.1rem;
+  }
+}

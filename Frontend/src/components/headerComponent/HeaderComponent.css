@@ -1,0 +1,43 @@
+.header-main {
+  display: flex;
+  flex-direction: column;
+  background-color: grey;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-div {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.pantheon-select-options {
+  text-transform: capitalize;
+}
+
+.logout-button {
+  border-radius: 6px;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  .footer-main {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-div {
+    padding: 15px;
+  }
+
+  .header-main {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-div {
+    padding: 15px;
+  }
+}

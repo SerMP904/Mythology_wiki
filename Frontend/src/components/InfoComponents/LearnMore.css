@@ -1,0 +1,39 @@
+.learn-more-main {
+  width: 90%;
+  margin: 1rem auto;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.learn-more-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.learn-more-section {
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+}
+
+.learn-more-text {
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .learn-more-main {
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .learn-more-title {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+  }
+
+  .learn-more-section {
+    margin-bottom: 1.2rem;
+    padding: 1rem;
+  }
+}

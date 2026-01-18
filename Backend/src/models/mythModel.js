@@ -1,0 +1,73 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const mythSchema = new Schema({
+  pantheon: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  overview: {
+    type: String,
+  },
+  representation: {
+    type: String,
+  },
+  majorGod:
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      symbols: [String],
+      
+      description: {
+        type: String,
+      },
+      portrait:{
+        type: String,
+      }
+    },
+  otherGods: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      symbols: [String],
+      description: {
+        type: String,
+      },
+      portrait:{
+        type: String,
+      }
+    },
+  ],
+  manuscript: {
+    name: {
+      type: String}, 
+    description: {
+      type: String,
+      } 
+  },
+  tales: [{
+    name: {
+      type: String},
+    description: {
+      type: String,
+      } 
+  }],
+  monsters: [{
+    name: {
+        type: String,
+        required: true,
+      },
+      description: {
+        type: String,
+      },
+  }]
+});
+
+const mythModel = mongoose.model("Myth", mythSchema, "myths");
+
+module.exports = mythModel;

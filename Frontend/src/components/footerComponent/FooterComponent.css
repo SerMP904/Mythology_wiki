@@ -1,0 +1,14 @@
+.footer-main {
+  display: flex;
+  flex-direction: column;
+  background-color: grey;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: auto;
+}
+
+.footer-div {
+  cursor: pointer;
+  padding: 10px;
+}
