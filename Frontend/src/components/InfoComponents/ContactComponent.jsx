@@ -24,7 +24,7 @@ const ContactComponent = () => {
 
       <div class="contact-section">
         <h3 class="contact-subtitle">Contacto telefónico</h3>
-        <p class="contacto-info-text">
+        <p class="contact-info-text">
           Teléfono: <a href="tel:111222333">111 222 333</a>
         </p>
       </div>
