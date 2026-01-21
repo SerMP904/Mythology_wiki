@@ -11,7 +11,7 @@ const signup = async (req, res) => {
     const existingEmail = await userModel.findOne({ email });
     if (existingEmail) {
       return res
-        .status(200)
+        .status(400)
         .send({ status: "Failed", message: "El email ya existe" });
     }
 
