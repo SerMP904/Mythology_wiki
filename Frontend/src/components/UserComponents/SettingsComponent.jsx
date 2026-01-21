@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteUserSelected, editUser } from "../../core/services/userFetch";
 import { useNavigate } from "react-router-dom";
+import { loadUser } from "./UserComponentAction";
 
 const SettingsComponent = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.userComponentReducer.user);
   const { data } = user || {};
   const [editSettings, setEditSettings] = useState(false);
@@ -16,8 +18,9 @@ const SettingsComponent = () => {
   }, [data]);
 
   const [name, setName] = useState("");
-  const [username, setUserame] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const enableEditSettings = () => {
     setEditSettings(true);
@@ -37,12 +40,16 @@ const SettingsComponent = () => {
 
   const changeUserData = async (e) => {
     e.preventDefault();
+    console.log(name, username, email)
+    if (!name.trim() && !username.trim() && !email.trim()) {setErrorMessage("Rellene al menos uno de los campos.") 
+      return;
+    }
     const newUser = {};
-    if (name.trim()) newUser.name = name;
-    if (username.trim()) newUser.username = username;
-    if (email.trim()) newUser.email = email;
+    if (name?.trim()) newUser.name = name;
+    if (username?.trim()) newUser.username = username;
+    if (email?.trim()) newUser.email = email;
     const updatedUser = await editUser(data._id, newUser, user.token);
-    setUserState(updatedUser);
+    dispatch(loadUser(updatedUser));
     finishEditSettings();
   };
 
@@ -58,12 +65,15 @@ const SettingsComponent = () => {
     navigate("/login");
   };
 
+
+
   return (
     <div className="settings-standard">
       {user ? (
         editSettings ? (
           <div>
             <form className="settings-form" onSubmit={changeUserData}>
+              {errorMessage && <p className="settings-error">{errorMessage}</p>}
               <span className="settings-element">Nombre del usuario: </span>
               <input
                 type="text"
@@ -76,7 +86,7 @@ const SettingsComponent = () => {
                 type="text"
                 placeholder={username || userState.username}
                 className="settings-element"
-                onChange={(e) => setUserame(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
               ></input>
               <span className="settings-element">Email: </span>
               <input

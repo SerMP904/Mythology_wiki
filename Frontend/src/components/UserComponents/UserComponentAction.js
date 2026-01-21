@@ -2,6 +2,7 @@ export const USER_LOGIN = "USER_LOGIN";
 export const USER_REGISTER = "USER_REGISTER";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const USERS_LOAD = "USERS_LOAD";
+export const USER_LOAD = "USER_LOAD"
 
 export const login = (userData) => {
   return {
@@ -30,7 +31,14 @@ export const loadUsers = (users) => {
   }
 }
 
-
+export const loadUser = (user) => {
+  return {
+    type: USER_LOAD,
+    payload: {
+      user,
+    }
+  }
+}
 
 export const logout = () => {
   localStorage.removeItem("token");
