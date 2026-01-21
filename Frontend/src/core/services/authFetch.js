@@ -13,18 +13,18 @@ export async function getData(email, password) {
       }),
     };
         const res = await fetch(url, options);
-        if (!res.ok) throw new Error("Fallo al realizar la petición");
         const response = await res.json();
-        console.log(response)
+        if (!res.ok) { return { error: response.message }};
         return response;
     } catch (error) {
-        console.log(error)
-        return null
+      return { error: error.message };
     }
 }
 
 export async function createNewUser(name, username, email, password){
   try {
+    if (!name || !username || !email || !password) { return { error: "Falta algún campo obligatorio por rellenar" };
+  }
     const url = "http://localhost:3000/api/auth/signup";
         const options = {
             method: "POST",
@@ -39,12 +39,11 @@ export async function createNewUser(name, username, email, password){
         })
         }
         const res = await fetch(url, options);
-        if (!res.ok) throw new Error("Fallo al realizar la petición");
         const response = await res.json();
+        if (!res.ok) return { error: response.message || "Error desconocido" };
         return response;
   } catch (error) {
-     console.log(error)
-        return null
+    return { error: error.message };
   }
 }
 
@@ -64,8 +63,7 @@ export async function loginUsingToken() {
         const response = await res.json();
         return response;
   } catch (error) {
-     console.log(error)
-        return null
+     return { error: error.message };
   }
 } 
 

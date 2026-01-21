@@ -15,19 +15,24 @@ const LoginComponent = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const loginUser = async (e) => {
     e.preventDefault();
+    if (!email || !password) {setErrorMessage("Falta por rellenar un campo obligatorio.")
+      return}
     const userData = await getData(email, password);
+    if (userData.error) {
+      setErrorMessage(userData.error);
+      return;
+    }
     if (userData) {
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("token", userData.token);
       localStorage.setItem("token_refresh", userData.token_refresh);
       dispatch(login(userData));
       navigate("/wiki");
-    } else {
-      console.log("no hay credenciales correctas");
-    }
+    } 
   };
 
   const registerUser = () => {
@@ -39,6 +44,7 @@ const LoginComponent = () => {
       {!user ? (
         <div className="login-main">
           <form onSubmit={loginUser} className="login-form">
+            {errorMessage && <p className="login-error">{errorMessage}</p>}
             <div className="login-form-question">
               <label className="login-form-label">Introduce email:</label>
               <input

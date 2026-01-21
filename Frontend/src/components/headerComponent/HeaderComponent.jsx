@@ -57,11 +57,11 @@ const HeaderComponent = () => {
       <div className="header-div" onClick={() => goToSettings()}>
         <p>Configuración</p>
       </div>
-      {user.data.role === "admin" ? (
+      {user.data.role === "admin" && (
         <div className="header-div">
           <button onClick={userManagement}>Control de usuarios</button>
         </div>
-      ) : null}
+      )}
       <div className="header-div">
         <button className="logout-button" onClick={() => logoutUser()}>
           Logout
