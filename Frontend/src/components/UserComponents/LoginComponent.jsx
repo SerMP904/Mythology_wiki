@@ -22,15 +22,17 @@ const LoginComponent = () => {
     if (!email || !password) {setErrorMessage("Falta por rellenar un campo obligatorio.")
       return}
     const userData = await getData(email, password);
+    if (userData.error) {
+      setErrorMessage(userData.error);
+      return;
+    }
     if (userData) {
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("token", userData.token);
       localStorage.setItem("token_refresh", userData.token_refresh);
       dispatch(login(userData));
       navigate("/wiki");
-    } else {
-      console.log("no hay credenciales correctas");
-    }
+    } 
   };
 
   const registerUser = () => {

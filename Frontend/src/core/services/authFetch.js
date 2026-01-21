@@ -13,9 +13,8 @@ export async function getData(email, password) {
       }),
     };
         const res = await fetch(url, options);
-        if (!res.ok) throw new Error("Fallo al realizar la petición");
         const response = await res.json();
-        console.log(response)
+        if (!res.ok) { return { error: response.message }};
         return response;
     } catch (error) {
       return { error: error.message };
