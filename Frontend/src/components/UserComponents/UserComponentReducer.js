@@ -25,6 +25,7 @@ const userComponentReducer = (state = initialState, action) => {
     case USER_LOAD:
       return {
         ...state,
+        user: action.payload.user,
         }
     case USER_LOGOUT:
       return {

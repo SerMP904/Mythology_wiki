@@ -12,6 +12,8 @@ const SettingsComponent = () => {
   const [editSettings, setEditSettings] = useState(false);
   const [isDeleteUser, setIsDeleteUser] = useState(false);
   const [userState, setUserState] = useState(data);
+  console.log("debajo")
+  console.log(user)
 
   useEffect(() => {
     setUserState(data);
@@ -45,9 +47,9 @@ const SettingsComponent = () => {
       return;
     }
     const newUser = {};
-    if (name?.trim()) newUser.name = name;
-    if (username?.trim()) newUser.username = username;
-    if (email?.trim()) newUser.email = email;
+    if (name?.trim()) newUser.name = name.trim();
+    if (username?.trim()) newUser.username = username.trim();
+    if (email?.trim()) newUser.email = email.trim();
     const updatedUser = await editUser(data._id, newUser, user.token);
     dispatch(loadUser(updatedUser));
     finishEditSettings();
@@ -65,7 +67,9 @@ const SettingsComponent = () => {
     navigate("/login");
   };
 
-
+  useEffect(() => {
+      loadUser();
+    }, [dispatch]);
 
   return (
     <div className="settings-standard">
@@ -90,7 +94,7 @@ const SettingsComponent = () => {
               ></input>
               <span className="settings-element">Email: </span>
               <input
-                type="text"
+                type="email"
                 placeholder={email || userState.email}
                 className="settings-element"
                 onChange={(e) => setEmail(e.target.value)}
