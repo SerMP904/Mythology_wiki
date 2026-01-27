@@ -17,7 +17,6 @@ const RegisterComponent = () => {
   const registerUserSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
-    console.log(name, username, email, password)
     if (!name || !username || !email || !password ) {setErrorMessage("Falta por rellenar un campo obligatorio.") 
       return;
     }
@@ -31,7 +30,6 @@ const RegisterComponent = () => {
       localStorage.setItem("token", userData.token);
       localStorage.setItem("token_refresh", userData.token_refresh);
       dispatch(register(userData));
-      console.log(userData);
       navigate("/wiki");
     } else {
       setErrorMessage(userData.error);
