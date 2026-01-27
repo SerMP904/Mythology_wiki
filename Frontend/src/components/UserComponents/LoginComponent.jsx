@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "./UserComponentAction";
-import { getData } from "../../core/services/authFetch";
+import { getData, loginUsingToken } from "../../core/services/authFetch";
 import WikiPage from "../../pages/WikiPage";
 
 const LoginComponent = () => {
@@ -22,10 +22,12 @@ const LoginComponent = () => {
     if (!email || !password) {setErrorMessage("Falta por rellenar un campo obligatorio.")
       return}
     const userData = await getData(email, password);
+    
     if (userData.error) {
       setErrorMessage(userData.error);
       return;
     }
+
     if (userData) {
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("token", userData.token);
@@ -38,6 +40,17 @@ const LoginComponent = () => {
   const registerUser = () => {
     navigate("/register");
   };
+
+useEffect(() => {
+  const autologin = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+  const loginToken = await loginUsingToken();
+  dispatch(login(loginToken));
+  navigate("/wiki")
+  }
+  autologin();
+})
 
   return (
     <div>
