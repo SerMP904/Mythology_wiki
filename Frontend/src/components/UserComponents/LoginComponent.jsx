@@ -20,11 +20,17 @@ const LoginComponent = () => {
   const loginUser = async (e) => {
     e.preventDefault();
     if (!email || !password) {setErrorMessage("Falta por rellenar un campo obligatorio.")
+      setTimeout (() => {
+        setErrorMessage("")
+      }, 3000)
       return}
     const userData = await getData(email, password);
-    
-    if (userData.error) {
-      setErrorMessage(userData.error);
+    console.log(userData)
+    if (userData.status === "Failed") {
+      setErrorMessage(userData.message);
+      setTimeout (() => {
+        setErrorMessage("")
+      }, 3000)
       return;
     }
 
@@ -57,7 +63,7 @@ useEffect(() => {
       {!user ? (
         <div className="login-main">
           <form onSubmit={loginUser} className="login-form">
-            {errorMessage && <p className="login-error">{errorMessage}</p>}
+            {errorMessage !=="" && <span className="login-error">{errorMessage}</span>}
             <div className="login-form-question">
               <label className="login-form-label">Introduce email:</label>
               <input
