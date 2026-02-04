@@ -1,4 +1,4 @@
-import { USER_LOGIN, USER_LOGOUT, USER_REGISTER, USERS_LOAD, USER_LOAD } from "./UserComponentAction";
+import { USER_LOGIN, USER_LOGOUT, USER_REGISTER, USERS_LOAD, USER_LOAD, UPDATE_USER_SUCCESS } from "./UserComponentAction";
 
 const initialState = {
   user: undefined,
@@ -32,6 +32,9 @@ const userComponentReducer = (state = initialState, action) => {
         ...state,
         user: undefined,
       };
+    case UPDATE_USER_SUCCESS:
+      return { ...state,
+        user: action.payload.user };
     default:
       return state;
   }

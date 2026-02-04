@@ -17,14 +17,19 @@ const RegisterComponent = () => {
   const registerUserSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
-    if (!name || !username || !email || !password ) {setErrorMessage("Falta por rellenar un campo obligatorio.") 
+    if (!name || !username || !email || !password ) {setErrorMessage("Falta por rellenar un campo obligatorio.")
+      setTimeout (() => {
+        setErrorMessage("")
+      }, 3000)
+      return}
+    const userData = await createNewUser(name, username, email, password);
+    if (userData.status === "Failed") {
+      setErrorMessage(userData.message);
+      setTimeout (() => {
+        setErrorMessage("")
+      }, 3000)
       return;
     }
-    const userData = await createNewUser(name, username, email, password);
-    if (userData.error) {
-    setErrorMessage(userData.error);
-    return;
-  }
     if (userData || name || username || email || password) {
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("token", userData.token);
@@ -32,7 +37,11 @@ const RegisterComponent = () => {
       dispatch(register(userData));
       navigate("/wiki");
     } else {
-      setErrorMessage(userData.error);
+      setErrorMessage(userData.message);
+      setTimeout (() => {
+        setErrorMessage("")
+      }, 3000)
+      return;
     }
   };
 

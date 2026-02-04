@@ -16,13 +16,12 @@ const MythComponents = () => {
   };
 
   const pantheonClick = (pantheon) => {
-      console.log(pantheon)
       navigate(`${pantheon}`)
     }
 
   useEffect(() => {
     loadMyths();
-  }, [dispatch]);
+  }, []);
 
   return (
     <div>

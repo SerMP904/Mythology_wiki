@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUserSelected, editUser } from "../../core/services/userFetch";
+import { deleteUserSelected, editUser, getUserUsingId } from "../../core/services/userFetch";
 import { useNavigate } from "react-router-dom";
 import { loadUser, logout } from "./UserComponentAction";
 
@@ -11,6 +11,8 @@ const SettingsComponent = () => {
   const data = user?.data;
   const [editSettings, setEditSettings] = useState(false);
   const [isDeleteUser, setIsDeleteUser] = useState(false);
+
+  console.log("user:", user)
 
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -35,22 +37,27 @@ const SettingsComponent = () => {
 
   const changeUserData = async (e) => {
     e.preventDefault();
-    if (!name.trim() && !username.trim() && !email.trim()) {
-      setErrorMessage("Rellene al menos uno de los campos.");
+    if (!name || !username || !email) {
+      setErrorMessage("Rellene todos los campos.");
       return;
     }
-    const newUser = {};
-    if (name?.trim()) newUser.name = name.trim();
-    if (username?.trim()) newUser.username = username.trim();
-    if (email?.trim()) newUser.email = email.trim();
-    const updatedUser = await editUser(data._id, newUser, user.token);
+    console.log("userToken", user.token)
+    const userId = await getUserUsingId(user.token)
+    console.log("userId", userId)
+    const newUser = {name: name, username: username, email: email};
+    console.log(newUser)
+    const updatedUser = await editUser(userId._id, newUser, user.token);
+    const updatedData = updatedUser.data
+    console.log("updatedUser", updatedUser)
+    console.log("updatedData", updatedData)
     dispatch(loadUser(updatedUser));
     finishEditSettings();
   };
 
   const deleteUser = async (e) => {
     e.preventDefault();
-    const deletedUser = await deleteUserSelected(data._id, user.token);
+    const userId = await getUserUsingId(user.token)
+    const deletedUser = await deleteUserSelected(userId._id, user.token);
     if (!deletedUser) return;
     dispatch(logout());
     navigate("/login");
@@ -128,7 +135,7 @@ const SettingsComponent = () => {
             <div className="settings-parameter-div">
               <span className="settings-element">Mote del usuario: </span>
               <span className="settings-element">
-                {username || data.username}
+                {username || user.username}
               </span>
             </div>
             <div className="settings-parameter-div">

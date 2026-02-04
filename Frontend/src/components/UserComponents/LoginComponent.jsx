@@ -10,27 +10,28 @@ const LoginComponent = () => {
   const navigate = useNavigate();
 
   const { user, usersSelected } = useSelector(
-    (state) => state.userComponentReducer
+    (state) => state.userComponentReducer,
   );
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const loginUser = async (e) => {
     e.preventDefault();
-    if (!email || !password) {setErrorMessage("Falta por rellenar un campo obligatorio.")
-      setTimeout (() => {
-        setErrorMessage("")
-      }, 3000)
-      return}
+    if (!email || !password) {
+      setErrorMessage("Falta por rellenar un campo obligatorio.");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
+      return;
+    }
     const userData = await getData(email, password);
-    console.log(userData)
+    console.log(userData);
     if (userData.status === "Failed") {
       setErrorMessage(userData.message);
-      setTimeout (() => {
-        setErrorMessage("")
-      }, 3000)
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
       return;
     }
 
@@ -40,30 +41,37 @@ const LoginComponent = () => {
       localStorage.setItem("token_refresh", userData.token_refresh);
       dispatch(login(userData));
       navigate("/wiki");
-    } 
+    }
   };
 
   const registerUser = () => {
     navigate("/register");
   };
 
-useEffect(() => {
-  const autologin = async () => {
-  const token = localStorage.getItem("token");
-  if (!token) return;
-  const loginToken = await loginUsingToken();
-  dispatch(login(loginToken));
-  navigate("/wiki")
-  }
-  autologin();
-})
+  useEffect(() => {
+    const autologin = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const loginToken = await loginUsingToken();
+
+      if (!loginToken || loginToken.error) return;
+
+      dispatch(login(loginToken));
+      navigate("/wiki");
+    };
+
+    autologin();
+  }, []);
 
   return (
     <div>
       {!user ? (
         <div className="login-main">
           <form onSubmit={loginUser} className="login-form">
-            {errorMessage !=="" && <span className="login-error">{errorMessage}</span>}
+            {errorMessage !== "" && (
+              <span className="login-error">{errorMessage}</span>
+            )}
             <div className="login-form-question">
               <label className="login-form-label">Introduce email:</label>
               <input

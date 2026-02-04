@@ -26,5 +26,5 @@ app.use("/api/myths", mythRouter);
 app.use("/api/auth", authRouter);
 
 app.listen(PORT, () => {
-    
+    console.log("Servidor corriendo")
 })
