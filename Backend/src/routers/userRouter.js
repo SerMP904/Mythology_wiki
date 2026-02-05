@@ -8,7 +8,7 @@ const {
 const { verifyToken, verifyAdmin, verifyUserPermissions } = require("../middlewares/auth")
 
 router.get("/", verifyToken, verifyAdmin, getAllUsers);
-router.get("/:idUser", getUserById);
+router.get("/get", verifyToken, getUserById);
 router.patch("/edit/:idUser", verifyToken, verifyUserPermissions, editUserById);
 router.delete("/delete/:idUser", verifyToken, verifyUserPermissions, deleteUserById);
 

@@ -53,7 +53,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await userModel
       .findOne({ email: email })
-      .select("name username email password role isActive id");
+      .select("name username email password role id isActive");
     if (!user)
       return res
         .status(400)
@@ -73,8 +73,8 @@ const login = async (req, res) => {
       username: user.username,
       email: user.email,
       password: user.password,
-      _id: user._id,
-      role: user.role
+      role: user.role,
+      _id: user._id
     };
 
     const payload = {

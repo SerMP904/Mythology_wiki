@@ -13,8 +13,10 @@ export async function getData(email, password) {
       }),
     };
         const res = await fetch(url, options);
+        console.log(res)
         const response = await res.json();
-        if (!res.ok) { return { error: response.message }};
+        console.log(response)
+        if (!res.ok) {return { status: response.status, message: response.message || "Failed"}} 
         return response;
     } catch (error) {
       return { error: error.message };
@@ -40,7 +42,7 @@ export async function createNewUser(name, username, email, password){
         }
         const res = await fetch(url, options);
         const response = await res.json();
-        if (!res.ok) return { error: response.message || "Error desconocido" };
+        if (!res.ok) return { status: response.status, message: response.message || "Error desconocido" };
         return response;
   } catch (error) {
     return { error: error.message };
