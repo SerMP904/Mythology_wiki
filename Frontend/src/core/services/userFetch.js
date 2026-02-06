@@ -10,7 +10,6 @@ export async function getUsers() {
       },
     };
     const res = await fetch(url, options);
-    console.log(res);
     if (!res.ok) throw new Error("Fallo al realizar la petición");
     const response = await res.json();
     return response;
@@ -23,6 +22,26 @@ export async function getUsers() {
 export async function getUserUsingId(token) {
   try {
     const url = `http://localhost:3000/api/user/get`;
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": token,
+      },
+    };
+    const res = await fetch(url, options);
+    if (!res.ok) throw new Error("Fallo al realizar la petición");
+    const response = await res.json();
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function manageUserUsingId(id, token) {
+  try {
+    const url = `http://localhost:3000/api/user/get/${id}`;
     const options = {
       method: "GET",
       headers: {
@@ -53,7 +72,6 @@ export async function editUser(idUser, newUserData, token) {
     };
     const res = await fetch(url, options);
     if (!res.ok) throw new Error("Fallo al realizar la petición");
-
     const response = await res.json();
     return response;
   } catch (error) {

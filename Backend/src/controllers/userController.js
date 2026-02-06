@@ -24,11 +24,22 @@ const getUserById = async (req, res) => {
   }
 };
 
+const getUserToManageById = async (req, res) => {
+  try {
+    const {idUser} = req.params;
+    const user = await userModel.findById(idUser);
+    if (!user) return res.status(200).send({status: "Failed", message: idUser});
+    res.status(200).send({ status: "Success", data: user });
+  } catch (error) {
+    res.status(500).send({ status: "Failed", error: error.message });
+  }
+};
+
 const deleteUserById = async (req, res) => {
   try {
     const { idUser } = req.params;
     const user = await userModel.findByIdAndDelete(idUser);
-    if (!user) return res.status(200).send("No existe usuario con ese id");
+    if (!user) return res.status(500).send("No existe usuario con ese id");
     res
       .status(200)
       .send({ status: "Success", message: "Usuario eliminado correctamente" });
@@ -39,7 +50,7 @@ const deleteUserById = async (req, res) => {
 
 const editUserById = async (req, res) => {
   try {
-    const idUser = req.payload._id;
+    const { idUser }= req.params;
     const token = req.payload.token;
     const { newUserData } = req.body;
     const newData = {}
@@ -65,4 +76,4 @@ const editUserById = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, getUserById, deleteUserById, editUserById };
+module.exports = { getAllUsers, getUserById, deleteUserById, editUserById, getUserToManageById };

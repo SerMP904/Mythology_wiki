@@ -20,7 +20,7 @@ const verifyToken = (req, res, next) => {
 
 const verifyAdmin = (req, res, next) => {
   try {
-    const { role } = req.payload;
+    const role = req.payload.role;
     if (role !== "admin") {
       return res.status(401).send({
         status: "Failed",
