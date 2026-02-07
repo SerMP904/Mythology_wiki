@@ -12,8 +12,6 @@ const SettingsComponent = () => {
   const [editSettings, setEditSettings] = useState(false);
   const [isDeleteUser, setIsDeleteUser] = useState(false);
 
-  console.log("user:", user)
-
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -39,17 +37,14 @@ const SettingsComponent = () => {
     e.preventDefault();
     if (!name || !username || !email) {
       setErrorMessage("Rellene todos los campos.");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
       return;
     }
-    console.log("userToken", user.token)
     const userId = await getUserUsingId(user.token)
-    console.log("userId", userId)
     const newUser = {name: name, username: username, email: email};
-    console.log(newUser)
     const updatedUser = await editUser(userId._id, newUser, user.token);
-    const updatedData = updatedUser.data
-    console.log("updatedUser", updatedUser)
-    console.log("updatedData", updatedData)
     dispatch(loadUser(updatedUser));
     finishEditSettings();
   };
@@ -135,7 +130,7 @@ const SettingsComponent = () => {
             <div className="settings-parameter-div">
               <span className="settings-element">Mote del usuario: </span>
               <span className="settings-element">
-                {username || user.username}
+                {username || data.username}
               </span>
             </div>
             <div className="settings-parameter-div">
