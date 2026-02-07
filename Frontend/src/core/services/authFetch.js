@@ -13,9 +13,7 @@ export async function getData(email, password) {
       }),
     };
         const res = await fetch(url, options);
-        console.log(res)
         const response = await res.json();
-        console.log(response)
         if (!res.ok) {return { status: response.status, message: response.message || "Failed"}} 
         return response;
     } catch (error) {
