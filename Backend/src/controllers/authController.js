@@ -11,7 +11,7 @@ const signup = async (req, res) => {
     const existingEmail = await userModel.findOne({ email });
     if (existingEmail) {
       return res
-        .status(200)
+        .status(400)
         .send({ status: "Failed", message: "El email ya existe" });
     }
 
@@ -53,19 +53,19 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await userModel
       .findOne({ email: email })
-      .select("name username email password role isActive id");
+      .select("name username email password role id isActive");
     if (!user)
       return res
-        .status(404)
-        .send({ status: "Failed", message: "credenciales incorrectas" });
+        .status(400)
+        .send({ status: "Failed", message: "Credenciales incorrectas" });
     const passwordValidation = await bcrypt.compare(password, user.password);
     if (!passwordValidation)
       return res
-        .status(404)
-        .send({ status: "Failed", message: "uno de los campos es incorrecto" });
+        .status(400)
+        .send({ status: "Failed", message: "Credenciales incorrectas" });
     if (!user.isActive)
       return res
-        .status(404)
+        .status(400)
         .send({ status: "Failed", message: "El usuario está deshabilitado" });
 
     const returnUser = {
@@ -73,8 +73,8 @@ const login = async (req, res) => {
       username: user.username,
       email: user.email,
       password: user.password,
-      _id: user._id,
-      role: user.role
+      role: user.role,
+      _id: user._id
     };
 
     const payload = {

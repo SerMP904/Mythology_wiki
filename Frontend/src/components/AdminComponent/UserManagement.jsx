@@ -4,6 +4,7 @@ import {
   editUser,
   getUsers,
   getUserUsingId,
+  manageUserUsingId,
 } from "../../core/services/userFetch";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUsers } from "../UserComponents/UserComponentAction";
@@ -48,41 +49,35 @@ const UserManagement = () => {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const editUserUsingId = async (id) => {
-    const userWithId = await getUserUsingId(id);
+    const userWithId = await manageUserUsingId(id, user.token);
     setSelectedUser(userWithId);
+    console.log("userSelected", selectedUser);
     enableEditSettings();
   };
 
   const deleteUserUsingId = async (id) => {
-    const userWithId = await getUserUsingId(id);
+    const userWithId = await manageUserUsingId(id, user.token);
     setSelectedUser(userWithId);
-    console.log(selectedUser);
+
     enableDeleteUser();
   };
 
   const changeUserData = async (e) => {
     e.preventDefault();
-    const newUser = {};
-    if (name.trim()) newUser.name = name;
-    if (username.trim()) newUser.username = username;
-    if (email.trim()) newUser.email = email;
-    const updatedUser = await editUser(
-      selectedUser.data._id,
-      newUser,
-      user.token,
-    );
-    setSelectedUser(updatedUser);
+    console.log("selectedUser", selectedUser);
+    const newUser = { name: name, username: username, email: email };
+    const updatedUser = await editUser(selectedUser._id, newUser, user.token);
+    console.log(updatedUser.data);
+    setSelectedUser(updatedUser.data);
+    console.log("selectedUser2", selectedUser);
     finishEditSettings();
   };
 
   const deleteUser = async (e) => {
     e.preventDefault();
-    console.log(selectedUser._id);
-    const deletedUser = await deleteUserSelected(
-      selectedUser.data._id,
-      user.token,
-    );
+    const deletedUser = await deleteUserSelected(selectedUser._id, user.token);
     setSelectedUser(deletedUser);
+    console.log("deleted");
     disableDeleteUser();
   };
 

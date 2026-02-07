@@ -15,9 +15,20 @@ const getAllUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
-    const { idUser } = req.params;
+    const idUser = req.payload._id;
     const user = await userModel.findById(idUser);
-    if (!user) return res.status(200).send("No existe usuario con ese id");
+    if (!user) return res.status(200).send({status: "Failed", message: idUser});
+    res.status(200).send({ status: "Success", data: user });
+  } catch (error) {
+    res.status(500).send({ status: "Failed", error: error.message });
+  }
+};
+
+const getUserToManageById = async (req, res) => {
+  try {
+    const {idUser} = req.params;
+    const user = await userModel.findById(idUser);
+    if (!user) return res.status(200).send({status: "Failed", message: idUser});
     res.status(200).send({ status: "Success", data: user });
   } catch (error) {
     res.status(500).send({ status: "Failed", error: error.message });
@@ -28,7 +39,7 @@ const deleteUserById = async (req, res) => {
   try {
     const { idUser } = req.params;
     const user = await userModel.findByIdAndDelete(idUser);
-    if (!user) return res.status(200).send("No existe usuario con ese id");
+    if (!user) return res.status(500).send("No existe usuario con ese id");
     res
       .status(200)
       .send({ status: "Success", message: "Usuario eliminado correctamente" });
@@ -39,7 +50,8 @@ const deleteUserById = async (req, res) => {
 
 const editUserById = async (req, res) => {
   try {
-    const { idUser } = req.params;
+    const { idUser }= req.params;
+    const token = req.payload.token;
     const { newUserData } = req.body;
     const newData = {}
     if (newUserData.name) {
@@ -51,16 +63,17 @@ const editUserById = async (req, res) => {
     if (newUserData.email) {
       newData.email = newUserData.email
     }
+    
     const updatedUser = await userModel.findByIdAndUpdate(idUser, newData, {
       new: true,
       runValidators: true,
     });
     if (!updatedUser)
       return res.status(500).send("No existe usuario con ese id");
-    res.status(200).send({ status: "Success", data: updatedUser });
+    res.status(200).send({ status: "Success", data: updatedUser, token });
   } catch (error) {
     res.status(500).send({ status: "Failed", error: error.message });
   }
 };
 
-module.exports = { getAllUsers, getUserById, deleteUserById, editUserById };
+module.exports = { getAllUsers, getUserById, deleteUserById, editUserById, getUserToManageById };

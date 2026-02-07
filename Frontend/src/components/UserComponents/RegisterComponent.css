@@ -41,6 +41,13 @@
   flex-direction: column;
 }
 
+.register-error {
+  color: red;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
 .register-form-label {
   color: #333333;
   margin-bottom: 5px;

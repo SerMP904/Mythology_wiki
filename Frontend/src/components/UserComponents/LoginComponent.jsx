@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "./UserComponentAction";
-import { getData } from "../../core/services/authFetch";
+import { getData, loginUsingToken } from "../../core/services/authFetch";
 import WikiPage from "../../pages/WikiPage";
 
 const LoginComponent = () => {
@@ -10,23 +10,37 @@ const LoginComponent = () => {
   const navigate = useNavigate();
 
   const { user, usersSelected } = useSelector(
-    (state) => state.userComponentReducer
+    (state) => state.userComponentReducer,
   );
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const loginUser = async (e) => {
     e.preventDefault();
+    if (!email || !password) {
+      setErrorMessage("Falta por rellenar un campo obligatorio.");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
+      return;
+    }
     const userData = await getData(email, password);
+    console.log(userData);
+    if (userData.status === "Failed") {
+      setErrorMessage(userData.message);
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
+      return;
+    }
+
     if (userData) {
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("token", userData.token);
       localStorage.setItem("token_refresh", userData.token_refresh);
       dispatch(login(userData));
       navigate("/wiki");
-    } else {
-      console.log("no hay credenciales correctas");
     }
   };
 
@@ -34,11 +48,30 @@ const LoginComponent = () => {
     navigate("/register");
   };
 
+  useEffect(() => {
+    const autologin = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const loginToken = await loginUsingToken();
+
+      if (!loginToken || loginToken.error) return;
+
+      dispatch(login(loginToken));
+      navigate("/wiki");
+    };
+
+    autologin();
+  }, []);
+
   return (
     <div>
       {!user ? (
         <div className="login-main">
           <form onSubmit={loginUser} className="login-form">
+            {errorMessage !== "" && (
+              <span className="login-error">{errorMessage}</span>
+            )}
             <div className="login-form-question">
               <label className="login-form-label">Introduce email:</label>
               <input

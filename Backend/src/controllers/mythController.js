@@ -43,8 +43,8 @@ const getAllMyths = async (req, res) => {
     const myths = await mythModel.find()
     if (myths.length === 0) return res.statust(200).send("No hay información para mostrar en la wiki")
     res.status(200).send({status: "Success", data: myths})
-  } catch {
-    res.status(500).send({status: "Failed", message: "Se ha producido un error"})
+  } catch (error){
+    res.status(500).send({status: "Failed", error: error.message})
   }
 }
 
@@ -54,8 +54,8 @@ const getMythsByPantheon = async (req, res) => {
     const myths = await mythModel.find({pantheon});
     if (myths.length === 0) return res.statust(200).send("No hay información para mostrar en la wiki")
     res.status(200).send({status: "Success", data: myths})
-  } catch (error) {
-    res.status(500).send({status: "Failed", message: "Se ha producido un error"})
+  } catch (error){
+    res.status(500).send({status: "Failed", error: error.message})
   }
 }
 
