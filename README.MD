@@ -167,7 +167,8 @@ main.jsx
 2. **Abre la URL generada**  
    - 🌐 **Accede a la URL**: Una vez que el servidor esté en funcionamiento, abre tu navegador y accede a la URL generada (generalmente `http://localhost:3000`).
 
-3. **Inicia sesión**  
+3. **Registrarse o Iniciar sesión**  
+   - 🔑 **Registrar nuevo usuario**: Rellena los campos para crear un nuevo usuario. Para que un usuario sea **admin**, hay que cambiar su rol en la base de datos una vez se haya registrado correctamente.
    - 🔑 **Login de usuario**: Usa un **email** y **contraseña válidos** para ingresar a la aplicación.
 
 4. **Explora la Wiki**  
