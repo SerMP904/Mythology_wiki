@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { register } from "./UserComponentAction";
 import { useNavigate } from "react-router-dom";
 import { createNewUser } from "../../core/services/authFetch";
+import { validateEmail } from "../../core/utils/checkEmail";
 
 const RegisterComponent = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,16 @@ const RegisterComponent = () => {
         setErrorMessage("")
       }, 3000)
       return}
+    if (!validateEmail(email)) {setErrorMessage("El email no es válido")
+      setTimeout (() => {
+        setErrorMessage("")
+      }, 5000)
+      return}
+    if (password.length < 5) {setErrorMessage("La contraseña es muy corta. Usa al menos 6 caracteres.")
+      setTimeout (() => {
+        setErrorMessage("")
+      }, 5000)
+      return}
     const userData = await createNewUser(name, username, email, password);
     if (userData.status === "Failed") {
       setErrorMessage(userData.message);
@@ -30,7 +41,7 @@ const RegisterComponent = () => {
       }, 3000)
       return;
     }
-    if (userData || name || username || email || password) {
+    if (userData) {
       localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("token", userData.token);
       localStorage.setItem("token_refresh", userData.token_refresh);
@@ -81,7 +92,7 @@ const RegisterComponent = () => {
         <div className="register-form-question">
           <label className="register-form-label">Introduce email</label>
           <input
-            type="text"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
