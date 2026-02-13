@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUserSelected, editUser, getUserUsingId } from "../../core/services/userFetch";
+import {
+  deleteUserSelected,
+  editUser,
+  getUserUsingId,
+} from "../../core/services/userFetch";
 import { useNavigate } from "react-router-dom";
-import { loadUser, logout } from "./UserComponentAction";
+import { loadUser, login, logout } from "./UserComponentAction";
+import { validateEmail } from "../../core/utils/checkEmail";
+import LoginComponent from "./LoginComponent";
+import { loginUsingToken } from "../../core/services/authFetch";
 
 const SettingsComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.userComponentReducer.user);
-  const data = user?.data;
+  const user = useSelector((state) => state.userComponentReducer.user?.data);
+  console.log(user);
+
   const [editSettings, setEditSettings] = useState(false);
   const [isDeleteUser, setIsDeleteUser] = useState(false);
 
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState(user?.name);
+  const [username, setUsername] = useState(user?.username);
+  const [email, setEmail] = useState(user?.email);
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const enableEditSettings = () => {
@@ -42,29 +51,54 @@ const SettingsComponent = () => {
       }, 3000);
       return;
     }
-    const userId = await getUserUsingId(user.token)
-    const newUser = {name: name, username: username, email: email};
-    const updatedUser = await editUser(userId._id, newUser, user.token);
+    if (!validateEmail(email)) {
+      setErrorMessage("El email no es válido");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
+      return;
+    }
+    const userToken = localStorage.getItem("token");
+    const newUser = { name: name, username: username, email: email };
+    console.log(user._id, newUser, userToken);
+    const updatedUser = await editUser(user._id, newUser, userToken);
     dispatch(loadUser(updatedUser));
     finishEditSettings();
   };
 
   const deleteUser = async (e) => {
     e.preventDefault();
-    const userId = await getUserUsingId(user.token)
+    const userId = await getUserUsingId(user.token);
     const deletedUser = await deleteUserSelected(userId._id, user.token);
     if (!deletedUser) return;
+    localStorage.removeItem("token");
+    localStorage.removeItem("token_refresh");
+    localStorage.removeItem("user");
     dispatch(logout());
     navigate("/login");
   };
 
-  const goToLogin = () => {
-    navigate("/login");
-  };
-
   useEffect(() => {
-    loadUser();
-  }, [dispatch]);
+    if (user) {
+      setName(user.name);
+      setUsername(user.username);
+      setEmail(user.email);
+    } else {
+      const autologin = async () => {
+        const token = localStorage.getItem("token");
+        
+        if (!token) {navigate("/login"); console.log("fallo");return;}
+
+        const loginToken = await loginUsingToken();
+        console.log(loginToken)
+        if (!loginToken || loginToken.error) {navigate("/login"); console.log("fallo2");return;}
+
+        dispatch(login(loginToken));
+        navigate("/wiki");
+      };
+      autologin();
+    }
+  }, [user]);
 
   return (
     <div className="settings-standard">
@@ -76,21 +110,21 @@ const SettingsComponent = () => {
               <span className="settings-element">Nombre del usuario: </span>
               <input
                 type="text"
-                placeholder={name || data.name}
+                value={name || user.name}
                 className="settings-element"
                 onChange={(e) => setName(e.target.value)}
               ></input>
               <span className="settings-element">Mote del usuario: </span>
               <input
                 type="text"
-                placeholder={username || data.username}
+                value={username || user.username}
                 className="settings-element"
                 onChange={(e) => setUsername(e.target.value)}
               ></input>
               <span className="settings-element">Email: </span>
               <input
                 type="email"
-                placeholder={email || data.email}
+                value={email || user.email}
                 className="settings-element"
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
@@ -125,19 +159,17 @@ const SettingsComponent = () => {
           <div className="settings-main">
             <div className="settings-parameter-div">
               <span className="settings-element">Nombre del usuario: </span>
-              <span className="settings-element">{name || data.name}</span>
+              <span className="settings-element">{name || user.name}</span>
             </div>
             <div className="settings-parameter-div">
               <span className="settings-element">Mote del usuario: </span>
               <span className="settings-element">
-                {username || data.username}
+                {username || user.username}
               </span>
             </div>
             <div className="settings-parameter-div">
               <span className="settings-element">Email: </span>
-              <span className="settings-element">
-                {email || data.email}
-              </span>
+              <span className="settings-element">{email || user.email}</span>
             </div>
             <div className="settings-buttons-div">
               <button className="settings-button" onClick={enableEditSettings}>
@@ -150,7 +182,9 @@ const SettingsComponent = () => {
           </div>
         )
       ) : (
-        <>{goToLogin}</>
+        <>
+          <LoginComponent />
+        </>
       )}
     </div>
   );

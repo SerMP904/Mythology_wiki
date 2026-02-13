@@ -8,7 +8,6 @@ export const getAllMyths = async () => {
         const res = await fetch(url, options);
         if (!res.ok) {throw new Error("Fallo al recibir la petición")};
         const myths = await res.json();
-        console.log(myths.data)
         return myths.data;
     } catch (error) {
         console.log(error)

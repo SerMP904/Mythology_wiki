@@ -28,7 +28,7 @@ const signup = async (req, res) => {
         message: "No se ha podido crear el usuario",
       });
     }
-
+    const returnUser = { name: user.name, username: user.username, email: user.email }
      const payload = {
       _id: user._id,
       name: user.name,
@@ -41,7 +41,7 @@ const signup = async (req, res) => {
     res.status(200).send({
       status: "Success",
       message: "El usuario se ha creado correctamente",
-      data: newUser, token, token_refresh
+      data: returnUser, token, token_refresh
     });
   } catch (error) {
     res.status(500).send({ status: "Failed", error: error.message });
@@ -72,7 +72,6 @@ const login = async (req, res) => {
       name: user.name,
       username: user.username,
       email: user.email,
-      password: user.password,
       role: user.role,
       _id: user._id
     };
@@ -94,9 +93,9 @@ const login = async (req, res) => {
 
 const loginWithToken = async (req, res) => {
   try {
-    const idUser = req.payload
-    const user = await userModel.findId(idUser)
-    if (!user) return res.status(401).send({status: "Failed", message: "no hay usuario"})
+    const idUser = req.payload._id
+    const user = await userModel.findById(idUser)
+    if (!user) return res.status(401).send({status: "Failed", message: "No hay usuario"})
     res.status(200).send({status: "Success", data: user})
   } catch (error) {
     res.status(500).send({ status: "Failed", error: error.message });

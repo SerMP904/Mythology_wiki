@@ -8,7 +8,7 @@
 @import "./components/UserComponents/LoginComponent.css";
 @import "./components/UserComponents/RegisterComponent.css";
 @import "./components/UserComponents/SettingsComponent.css";
-@import "./components/AdminComponent/UserManagement.css";
+@import "./components/AdminComponent/UserManagementComponent.css";
 
 .outlet-min-height {
   min-height: 85vh;

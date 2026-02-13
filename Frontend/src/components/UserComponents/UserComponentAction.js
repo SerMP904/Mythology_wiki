@@ -42,9 +42,6 @@ export const loadUser = (user) => {
 }
 
 export const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("token_refresh");
-  localStorage.removeItem("user");
   return {
     type: USER_LOGOUT,
   };

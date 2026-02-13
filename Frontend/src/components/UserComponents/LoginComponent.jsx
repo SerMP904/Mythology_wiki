@@ -9,7 +9,7 @@ const LoginComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { user, usersSelected } = useSelector(
+  const { user } = useSelector(
     (state) => state.userComponentReducer,
   );
   const [email, setEmail] = useState("");
@@ -26,7 +26,6 @@ const LoginComponent = () => {
       return;
     }
     const userData = await getData(email, password);
-    console.log(userData);
     if (userData.status === "Failed") {
       setErrorMessage(userData.message);
       setTimeout(() => {
@@ -54,13 +53,12 @@ const LoginComponent = () => {
       if (!token) return;
 
       const loginToken = await loginUsingToken();
-
+      console.log(loginToken)
       if (!loginToken || loginToken.error) return;
 
       dispatch(login(loginToken));
       navigate("/wiki");
     };
-
     autologin();
   }, []);
 
@@ -86,6 +84,7 @@ const LoginComponent = () => {
               <input
                 type="password"
                 className="login-form-input"
+                minLength="6"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

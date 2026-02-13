@@ -30,6 +30,9 @@ const HeaderComponent = () => {
   };
 
   const logoutUser = async () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("token_refresh");
     dispatch(logout());
     navigate("/login");
   };
