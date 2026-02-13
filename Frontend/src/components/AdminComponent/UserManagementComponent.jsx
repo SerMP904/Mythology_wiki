@@ -3,19 +3,18 @@ import {
   deleteUserSelected,
   editUser,
   getUsers,
-  getUserUsingId,
   manageUserUsingId,
 } from "../../core/services/userFetch";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUsers } from "../UserComponents/UserComponentAction";
-import { useNavigate } from "react-router-dom";
+import { validateEmail } from "../../core/utils/checkEmail";
 
 const UserManagement = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const users = useSelector((state) => state.userComponentReducer.users);
-
   const user = useSelector((state) => state.userComponentReducer.user);
+  const userToken = localStorage.getItem("token");
+
   const [editSettings, setEditSettings] = useState(false);
   const [isDeleteUser, setIsDeleteUser] = useState(false);
 
@@ -27,8 +26,9 @@ const UserManagement = () => {
   };
 
   const [name, setName] = useState("");
-  const [username, setUserame] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const enableEditSettings = () => {
     setEditSettings(true);
@@ -49,35 +49,45 @@ const UserManagement = () => {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const editUserUsingId = async (id) => {
-    const userWithId = await manageUserUsingId(id, user.token);
+    const userWithId = await manageUserUsingId(id, userToken);
     setSelectedUser(userWithId);
-    console.log("userSelected", selectedUser);
     enableEditSettings();
   };
 
   const deleteUserUsingId = async (id) => {
-    const userWithId = await manageUserUsingId(id, user.token);
+    const userWithId = await manageUserUsingId(id, userToken);
     setSelectedUser(userWithId);
-
     enableDeleteUser();
   };
 
   const changeUserData = async (e) => {
     e.preventDefault();
-    console.log("selectedUser", selectedUser);
+    console.log(selectedUser)
+    console.log(name, username, email)
+    if (!name || !username || !email) {
+      setErrorMessage("Rellene todos los campos.");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
+      return;
+    }
+    if (!validateEmail(email)) {
+      setErrorMessage("El email no es válido");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
+      return;
+    }
     const newUser = { name: name, username: username, email: email };
-    const updatedUser = await editUser(selectedUser._id, newUser, user.token);
-    console.log(updatedUser.data);
+    const updatedUser = await editUser(selectedUser._id, newUser, userToken);
     setSelectedUser(updatedUser.data);
-    console.log("selectedUser2", selectedUser);
     finishEditSettings();
   };
 
   const deleteUser = async (e) => {
     e.preventDefault();
-    const deletedUser = await deleteUserSelected(selectedUser._id, user.token);
+    const deletedUser = await deleteUserSelected(selectedUser._id, userToken);
     setSelectedUser(deletedUser);
-    console.log("deleted");
     disableDeleteUser();
   };
 
@@ -85,29 +95,41 @@ const UserManagement = () => {
     userList();
   }, [users]);
 
+  useEffect(() => {
+  if (selectedUser) {
+    setName(selectedUser.name);
+    setUsername(selectedUser.username);
+    setEmail(selectedUser.email);
+  }
+}, [selectedUser]);
+
   return (
     <div>
       {!users || users.length === 0 ? (
-        <div>cargando datos</div>
+        <div>{errorMessage}</div>
       ) : editSettings ? (
         <div>
           <form className="settings-form" onSubmit={changeUserData}>
+            {errorMessage && <p className="settings-error">{errorMessage}</p>}
             <span className="settings-element">Nombre del usuario </span>
             <input
               type="text"
               className="settings-element"
+              value={name || selectedUser.name}
               onChange={(e) => setName(e.target.value)}
             ></input>
             <span className="settings-element">Mote del usuario </span>
             <input
               type="text"
               className="settings-element"
-              onChange={(e) => setUserame(e.target.value)}
+              value={username || selectedUser.username}
+              onChange={(e) => setUsername(e.target.value)}
             ></input>
             <span className="settings-element">Email </span>
             <input
               type="text"
               className="settings-element"
+              value={email || selectedUser.email}
               onChange={(e) => setEmail(e.target.value)}
             ></input>
             <div className="settings-buttons-div">
@@ -123,7 +145,7 @@ const UserManagement = () => {
       ) : isDeleteUser ? (
         <div className="settings-form">
           <div className="settings-element">
-            <p>¿Seguro que desea eliminar su cuenta?</p>
+            <p>¿Seguro que desea eliminar la cuenta?</p>
           </div>
           <div className="settings-buttons-div">
             <button className="settings-button" onClick={deleteUser}>
