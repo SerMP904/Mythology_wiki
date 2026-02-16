@@ -53,7 +53,6 @@ const LoginComponent = () => {
       if (!token) return;
 
       const loginToken = await loginUsingToken();
-      console.log(loginToken)
       if (!loginToken || loginToken.error) return;
 
       dispatch(login(loginToken));
