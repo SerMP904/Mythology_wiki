@@ -68,8 +68,9 @@ const SettingsComponent = () => {
 
   const deleteUser = async (e) => {
     e.preventDefault();
-    const userId = await getUserUsingId(user.token);
-    const deletedUser = await deleteUserSelected(userId._id, user.token);
+    const userToken = localStorage.getItem("token");
+    const userId = await getUserUsingId(userToken);
+    const deletedUser = await deleteUserSelected(userId._id, userToken);
     if (!deletedUser) return;
     localStorage.removeItem("token");
     localStorage.removeItem("token_refresh");
