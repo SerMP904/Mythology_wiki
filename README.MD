@@ -84,6 +84,11 @@ Sigue estos pasos para poner en marcha el proyecto tanto en el **Backend** como 
 
     npm run dev
 
+5. **Creación de la wiki**
+
+    - Tras crear un usuario, se crea la base de datos.
+
+    - En MongoDB, en la colección **myths** se puede importar la información que mostrará la wiki
 
 ---
 
